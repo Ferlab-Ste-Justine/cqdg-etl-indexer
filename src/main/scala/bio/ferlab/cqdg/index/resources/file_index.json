@@ -1,0 +1,270 @@
+{
+  "settings" : {
+    "index" : {
+      "number_of_shards" : "1",
+      "number_of_replicas" : "1",
+      "auto_expand_replicas": "0-all",
+      "max_ngram_diff": "10",
+      "analysis": {
+        "analyzer": {
+          "keyword_analyzer_lowercase": {
+            "filter": "lowercase",
+            "tokenizer": "keyword"
+          },
+          "keyword_search_analyzer_lowercase": {
+            "tokenizer": "lowercase"
+          },
+          "cqdg_analyzer_en": {
+            "filter": [
+              "english_possessive_stemmer",
+              "lowercase",
+              "english_stop",
+              "english_stemmer"
+            ],
+            "tokenizer": "standard"
+          },
+          "cqdg_analyzer_fr": {
+            "filter": [
+              "lowercase",
+              "french_stop",
+              "french_stemmer"
+            ],
+            "tokenizer": "standard"
+          },
+          "cqdg_autocomplete_analyzer": {
+            "filter": [
+              "cqdg_ngram_filter"
+            ],
+            "tokenizer": "lowercase"
+          },
+          "cqdg_autocomplete_search_analyzer": {
+            "tokenizer": "lowercase"
+          }
+        },
+        "filter": {
+          "cqdg_ngram_filter": {
+            "type": "ngram",
+            "min_gram": 2,
+            "max_gram": 12,
+            "token_chars": [
+              "letter",
+              "digit",
+              "punctuation",
+              "symbol"
+            ]
+          },
+          "english_possessive_stemmer": {
+            "language": "possessive_english",
+            "type": "stemmer"
+          },
+          "english_stemmer": {
+            "language": "english",
+            "type": "stemmer"
+          },
+          "english_stop": {
+            "stopwords": "_english_",
+            "type": "stop"
+          },
+          "french_stemmer": {
+            "language": "french",
+            "type": "stemmer"
+          },
+          "french_stop": {
+            "stopwords": "_french_",
+            "type": "stop"
+          }
+        }
+      }
+    }
+  },
+  "mappings" : {
+    "properties" : {
+      "data_access" : {
+        "type" : "keyword"
+      },
+      "data_category" : {
+        "type" : "keyword"
+      },
+      "data_type" : {
+        "type" : "keyword"
+      },
+      "experimental_strategy" : {
+        "type" : "keyword"
+      },
+      "file_format" : {
+        "type" : "keyword"
+      },
+      "file_name" : {
+        "type" : "text"
+      },
+      "file_name_keyword" : {
+        "type" : "keyword"
+      },
+      "file_name_ngrams" : {
+        "type" : "text",
+        "analyzer": "cqdg_autocomplete_analyzer",
+        "search_analyzer": "cqdg_autocomplete_search_analyzer"
+      },
+      "is_harmonized" : {
+        "type" : "boolean"
+      },
+      "platform" : {
+        "type" : "keyword"
+      },
+      "file_variant_class" : {
+        "type" : "keyword"
+      },
+      "biospecimen" : {
+        "type": "nested",
+        "properties": {
+          "submitter_biospecimen_id" : {
+            "type" : "keyword"
+          },
+          "anatomic_location" : {
+            "type" : "keyword"
+          },
+          "icd_term_keyword" : {
+            "type": "keyword"
+          },
+          "icd_term" : {
+            "type" : "text",
+            "analyzer": "english",
+            "search_analyzer": "cqdg_analyzer_en",
+            "term_vector": "with_positions_offsets",
+            "store": true
+          },
+          "is_cancer" : {
+            "type" : "boolean"
+          },
+          "sample_type" : {
+            "type" : "keyword"
+          },
+          "tissue_source" : {
+            "type" : "keyword"
+          },
+          "tumor_normal_designation" : {
+            "type" : "keyword"
+          },
+          "type" : {
+            "type" : "keyword"
+          }
+        }
+      },
+      "study" : {
+        "type": "nested",
+        "properties" : {
+          "study_id" : {
+            "analyzer": "keyword_analyzer_lowercase",
+            "search_analyzer": "keyword_search_analyzer_lowercase",
+            "type" : "text",
+            "store": true
+          },
+          "study_id_keyword" : {
+            "type" : "keyword"
+          },
+          "domain" : {
+            "type" : "keyword"
+          },
+          "name" : {
+            "type" : "text",
+            "store": true
+          },
+          "short_name" : {
+            "type" : "text",
+            "analyzer": "english",
+            "search_analyzer": "cqdg_analyzer_en",
+            "term_vector": "with_positions_offsets",
+            "store": true
+          },
+          "short_name_keyword" : {
+            "type" : "keyword"
+          },
+          "short_name_ngrams": {
+            "type" : "text",
+            "analyzer": "cqdg_autocomplete_analyzer",
+            "search_analyzer": "cqdg_autocomplete_search_analyzer"
+          }
+        }
+      },
+      "cases" : {
+        "type": "nested",
+        "properties": {
+          "submitter_donor_id" : {
+            "type" : "keyword"
+          },
+          "age_at_recruitment" : {
+            "type" : "integer"
+          },
+          "vital_status" : {
+            "type" : "keyword"
+          },
+          "ethnicity" : {
+            "type" : "keyword"
+          },
+          "gender" : {
+            "type" : "keyword"
+          }
+        }
+      },
+      "diagnoses" : {
+        "type": "nested",
+        "properties" : {
+          "icd_category_keyword" : {
+            "type": "keyword"
+          },
+          "icd_category" : {
+            "type" : "text",
+            "analyzer": "english",
+            "search_analyzer": "cqdg_analyzer_en",
+            "term_vector": "with_positions_offsets",
+            "store": true
+          },
+          "icd_code" : {
+            "type": "keyword"
+          },
+          "icd_term_keyword" : {
+            "type": "keyword"
+          },
+          "icd_term" : {
+            "type" : "text",
+            "analyzer": "english",
+            "search_analyzer": "cqdg_analyzer_en",
+            "term_vector": "with_positions_offsets",
+            "store": true
+          },
+          "age_at_diagnosis" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "phenotypes" : {
+        "type": "nested",
+        "properties" : {
+          "hpo_category_keyword" : {
+            "type" : "keyword"
+          },
+          "hpo_category" : {
+            "type" : "text",
+            "analyzer": "english",
+            "search_analyzer": "cqdg_analyzer_en",
+            "term_vector": "with_positions_offsets",
+            "store": true
+          },
+          "hpo_code" : {
+            "type" : "keyword"
+          },
+          "hpo_term_keyword" : {
+            "type" : "keyword"
+          },
+          "hpo_term" : {
+            "type" : "text",
+            "analyzer": "english",
+            "search_analyzer": "cqdg_analyzer_en",
+            "term_vector": "with_positions_offsets",
+            "store": true
+          }
+        }
+      }
+    }
+  }
+}
