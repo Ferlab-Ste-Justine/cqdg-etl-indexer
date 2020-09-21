@@ -165,6 +165,12 @@
           },
           "file_variant_class" : {
             "type" : "keyword"
+          },
+          "is_harmonized" : {
+            "type" : "boolean"
+          },
+          "experimental_strategy" : {
+            "type" : "keyword"
           }
         }
       },

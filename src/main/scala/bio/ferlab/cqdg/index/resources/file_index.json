@@ -94,6 +94,9 @@
       "file_format" : {
         "type" : "keyword"
       },
+      "file_id" : {
+        "type" : "keyword"
+      },
       "file_name" : {
         "type" : "text"
       },
