@@ -139,8 +139,16 @@
           "is_cancer" : {
             "type" : "boolean"
           },
-          "sample_type" : {
-            "type" : "keyword"
+          "samples" : {
+            "type": "nested",
+            "properties": {
+              "submitter_sample_id" : {
+                "type" : "keyword"
+              },
+              "sample_type" : {
+                "type" : "keyword"
+              }
+            }
           },
           "tissue_source" : {
             "type" : "keyword"

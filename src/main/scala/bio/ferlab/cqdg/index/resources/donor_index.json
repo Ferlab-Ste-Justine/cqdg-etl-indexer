@@ -110,8 +110,15 @@
             "term_vector": "with_positions_offsets",
             "store": true
           },
-          "icd_code" : {
+          "mondo_term_keyword" : {
             "type": "keyword"
+          },
+          "mondo_term" : {
+            "type" : "text",
+            "analyzer": "english",
+            "search_analyzer": "cqdg_analyzer_en",
+            "term_vector": "with_positions_offsets",
+            "store": true
           },
           "icd_term_keyword" : {
             "type": "keyword"
