@@ -132,6 +132,68 @@
           },
           "age_at_diagnosis" : {
             "type" : "integer"
+          },
+          "treatments" : {
+            "type": "nested",
+            "properties" : {
+              "submitter_treatment_id" : {
+                "type" : "keyword"
+              },
+              "treatment_type" : {
+                "type" : "keyword"
+              },
+              "icd_term_keyword" : {
+                "type": "keyword"
+              },
+              "icd_term" : {
+                "type" : "text",
+                "analyzer": "english",
+                "search_analyzer": "cqdg_analyzer_en",
+                "term_vector": "with_positions_offsets",
+                "store": true
+              },
+              "treatment_is_primary": {
+                "type": "keyword"
+              },
+              "treatment_intent": {
+                "type": "keyword"
+              },
+              "treatment_response": {
+                "type": "keyword"
+              },
+              "medication_name": {
+                "type": "keyword"
+              },
+              "medication_code": {
+                "type": "keyword"
+              },
+              "medication_class": {
+                "type": "keyword"
+              },
+              "medication_start_date": {
+                "type": "keyword"
+              },
+              "medication_end_date": {
+                "type": "keyword"
+              }
+            }
+          },
+          "followUps" : {
+            "type": "nested",
+            "properties" : {
+              "submitter_follow_up_id" : {
+                "type" : "keyword"
+              },
+              "disease_status_at_followup" : {
+                "type" : "keyword"
+              },
+              "relapse_interval" : {
+                "type" : "keyword"
+              },
+              "days_to_follow_up" : {
+                "type" : "integer"
+              }
+            }
           }
         }
       },
@@ -152,6 +214,9 @@
           },
           "file_format" : {
             "type" : "keyword"
+          },
+          "file_size" : {
+            "type" : "float"
           },
           "file_name" : {
             "type" : "text"
@@ -178,6 +243,50 @@
           },
           "experimental_strategy" : {
             "type" : "keyword"
+          },
+          "biospecimen" : {
+            "type": "nested",
+            "properties": {
+              "submitter_biospecimen_id" : {
+                "type" : "keyword"
+              },
+              "anatomic_location" : {
+                "type" : "keyword"
+              },
+              "icd_term_keyword" : {
+                "type": "keyword"
+              },
+              "icd_term" : {
+                "type" : "text",
+                "analyzer": "english",
+                "search_analyzer": "cqdg_analyzer_en",
+                "term_vector": "with_positions_offsets",
+                "store": true
+              },
+              "is_cancer" : {
+                "type" : "boolean"
+              },
+              "samples" : {
+                "type": "nested",
+                "properties": {
+                  "submitter_sample_id" : {
+                    "type" : "keyword"
+                  },
+                  "sample_type" : {
+                    "type" : "keyword"
+                  }
+                }
+              },
+              "tissue_source" : {
+                "type" : "keyword"
+              },
+              "tumor_normal_designation" : {
+                "type" : "keyword"
+              },
+              "type" : {
+                "type" : "keyword"
+              }
+            }
           }
         }
       },
@@ -242,6 +351,69 @@
             "type" : "text",
             "analyzer": "cqdg_autocomplete_analyzer",
             "search_analyzer": "cqdg_autocomplete_search_analyzer"
+          },
+          "population" : {
+            "type" : "keyword"
+          }
+        }
+      },
+      "familyRelationships" : {
+        "type": "nested",
+        "properties" : {
+          "submitter_family_id" : {
+            "type" : "keyword"
+          },
+          "submitter_donor_id_1" : {
+            "type" : "keyword"
+          },
+          "submitter_donor_id_2" : {
+            "type" : "keyword"
+          },
+          "family_type" : {
+            "type" : "keyword"
+          },
+          "familiy_1_2_relationship" : {
+            "type" : "keyword"
+          },
+          "family_2_1_relationship" : {
+            "type" : "keyword"
+          }
+        }
+      },
+      "familyHistory" : {
+        "type": "nested",
+        "properties" : {
+          "submitter_family_condition_id" : {
+            "type" : "keyword"
+          },
+          "family_condition_name" : {
+            "type" : "keyword"
+          },
+          "family_condition_age" : {
+            "type" : "integer"
+          },
+          "family_condition_relationship" : {
+            "type" : "keyword"
+          },
+          "family_cancer_history" : {
+            "type" : "keyword"
+          }
+        }
+      },
+      "exposure" : {
+        "type": "nested",
+        "properties" : {
+          "submitter_exposure_id" : {
+            "type" : "keyword"
+          },
+          "smoking_status" : {
+            "type" : "keyword"
+          },
+          "alcohol_status" : {
+            "type" : "keyword"
+          },
+          "FSA" : {
+            "type" : "keyword"
           }
         }
       }

@@ -1,11 +1,10 @@
-package bio.ferlab.cqdg.index
+package ca.cqdg.index
 
 import org.apache.hadoop.fs.FileStatus
 import org.apache.http.HttpResponse
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods._
 import org.apache.http.entity.StringEntity
-import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.message.BasicHeader
 import org.apache.http.protocol.HTTP
 import org.apache.http.util.EntityUtils
