@@ -97,9 +97,9 @@ object Indexer extends App {
 
   //NB.: The output folders MUST BE "cases" and "files"
   indexBasedOnDirectoryStructure(
-    s"$input/cases",
+    s"$input/donors",
     "donor_index.json",
-    "cases")
+    "donors")
 
   indexBasedOnDirectoryStructure(
     s"$input/files",

@@ -178,7 +178,7 @@
               }
             }
           },
-          "followUps" : {
+          "follow_ups" : {
             "type": "nested",
             "properties" : {
               "submitter_follow_up_id" : {

@@ -203,7 +203,7 @@
           }
         }
       },
-      "cases" : {
+      "donors" : {
         "type": "nested",
         "properties": {
           "submitter_donor_id" : {
@@ -357,7 +357,7 @@
               }
             }
           },
-          "followUps" : {
+          "follow_ups" : {
             "type": "nested",
             "properties" : {
               "submitter_follow_up_id" : {
