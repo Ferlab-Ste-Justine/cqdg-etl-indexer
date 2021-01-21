@@ -354,6 +354,21 @@
           },
           "population" : {
             "type" : "keyword"
+          },
+          "keyword" : {
+            "type" : "keyword"
+          },
+          "website" : {
+            "type" : "keyword"
+          },
+          "description" : {
+            "type" : "keyword"
+          },
+          "access_limitations" : {
+            "type" : "keyword"
+          },
+          "access_requirements" : {
+            "type" : "keyword"
           }
         }
       },

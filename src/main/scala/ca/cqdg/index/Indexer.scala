@@ -106,5 +106,10 @@ object Indexer extends App {
     "file_index.json",
     "files")
 
+  indexBasedOnDirectoryStructure(
+    s"$input/studies",
+    "study_index.json",
+    "studies")
+
   spark.stop()
 }
