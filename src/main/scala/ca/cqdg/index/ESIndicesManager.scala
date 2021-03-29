@@ -1,6 +1,5 @@
 package ca.cqdg.index
 
-import org.apache.hadoop.fs.FileStatus
 import org.apache.http.HttpResponse
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods._
@@ -21,8 +20,12 @@ object ESIndicesManager {
   Logger.getLogger("ferlab").setLevel(Level.ERROR)
   val logger = Logger.getLogger(ESIndicesManager.getClass)
 
-  def swapIndex(http: HttpClient, host:String, dir:FileStatus, indexSuffix:String, indexConfig:String, aliasUrl:String)(implicit spark: SparkSession): String ={
-    val aliasName = dir.getPath.getName.replace("study_id=", "").concat(indexSuffix).toLowerCase()
+  def swapIndex(http: HttpClient, host:String, s3Bucket: String, dir:String, indexSuffix:String, indexConfig:String, aliasUrl:String)(implicit spark: SparkSession): String ={
+    // dir = clinical-data-etl-indexer/donors/study_id=ST0001/dictionary_version=5.13/study_version=1/study_version_creation_date=2021-03-19/part-00000-0c395405-aadc-43a6-8550-eb0f54641300.c000.json
+    val prefixParts = dir.split("/")
+    val prefixStudy = prefixParts.take(3).mkString("/")
+    val aliasName = prefixParts(2).split("=")(1).concat(indexSuffix).toLowerCase()
+
     val index1 = s"$aliasName-1"
     val index2 = s"$aliasName-2"
 
@@ -39,7 +42,7 @@ object ESIndicesManager {
       val index2ExistsResponseCode: Int = index2ExistsResponse.getStatusLine.getStatusCode
 
       createIndex(http, indexConfig, indexUrl1)
-      spark.read.json(dir.getPath.toString).saveToEs(index1)
+      spark.read.json(s"s3a://${s3Bucket}/${prefixStudy}").saveToEs(index1)
 
       if(200 != index2ExistsResponseCode)
         setAlias(http, Some(List(index1)), None, aliasName, aliasUrl)
@@ -51,7 +54,7 @@ object ESIndicesManager {
       index1
     }else{
       createIndex(http, indexConfig, indexUrl2)
-      spark.read.json(dir.getPath.toString).saveToEs(index2)
+      spark.read.json(s"s3a://${s3Bucket}/${prefixStudy}").saveToEs(index2)
       setAlias(http, Some(List(index2)), Some(List(index1)), aliasName, aliasUrl)
       deleteIndex(http, indexUrl1)
 
