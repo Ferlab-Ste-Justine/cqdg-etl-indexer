@@ -84,10 +84,6 @@ object Indexer extends App {
     .withClientConfiguration(clientConfiguration)
     .build()
 
-  def getConfiguration(key: String, default: String): String = {
-    Properties.envOrElse(key, Properties.propOrElse(key, default))
-  }
-
   def indexBasedOnDirectoryStructure(directoryToIndex:String, indexConfig:String, indexName:String): Unit ={
     val httpBuilder = HttpClientBuilder.create()//.useSystemProperties()
 
@@ -124,17 +120,17 @@ object Indexer extends App {
   //NB.: The output folders MUST BE "cases" and "files"
   indexBasedOnDirectoryStructure(
     s"clinical-data-etl-indexer/donors",
-    "donor_index.json",
+    "donors_index.json",
     "donors")
 
   indexBasedOnDirectoryStructure(
     s"clinical-data-etl-indexer/files",
-    "file_index.json",
+    "files_index.json",
     "files")
 
   indexBasedOnDirectoryStructure(
     s"clinical-data-etl-indexer/studies",
-    "study_index.json",
+    "studies_index.json",
     "studies")
 
   spark.stop()
