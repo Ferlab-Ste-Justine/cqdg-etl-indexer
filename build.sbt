@@ -8,6 +8,9 @@ javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 val spark_version = "2.4.6"
 
+resolvers += "Sonatype OSS Snapshots" at "https://s01.oss.sonatype.org/content/repositories/snapshots"
+resolvers += "Sonatype OSS Releases" at "https://s01.oss.sonatype.org/content/repositories/releases"
+
 /* Runtime */
 libraryDependencies +=  "org.apache.spark" %% "spark-sql" % spark_version % Provided
 libraryDependencies +=  "org.apache.hadoop" % "hadoop-common" % "2.10.1" % Provided
@@ -17,6 +20,8 @@ libraryDependencies += "org.elasticsearch" %% "elasticsearch-spark-20" % "7.8.1"
 libraryDependencies += "commons-httpclient" % "commons-httpclient" % "3.1"
 libraryDependencies += "com.amazonaws" % "aws-java-sdk-bom" % "1.11.975"
 libraryDependencies += "com.amazonaws" % "aws-java-sdk-s3" % "1.11.975"
+libraryDependencies += "bio.ferlab" %% "datalake-spark2" % "0.0.42"
+
 /* Test */
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test"
 
