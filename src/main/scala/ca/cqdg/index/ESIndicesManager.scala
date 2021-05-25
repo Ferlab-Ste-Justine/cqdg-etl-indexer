@@ -63,7 +63,7 @@ object ESIndicesManager {
   }
 
   def createIndex(http:HttpClient, indexConfig:String, indexUrl:String): Unit ={
-    val configSource:Source = Source.fromInputStream(getClass.getResourceAsStream(s"resources/$indexConfig"), "UTF-8")
+    val configSource:Source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(indexConfig), "UTF-8")
     val config:String = try configSource.getLines().mkString finally configSource.close()
 
     val indexCreationRequest = new HttpPut(indexUrl)
