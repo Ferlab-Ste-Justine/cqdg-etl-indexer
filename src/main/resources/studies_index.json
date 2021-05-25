@@ -1,4 +1,5 @@
 {
+  "index_patterns": ["st*_studies-*"],
   "settings" : {
     "index" : {
       "number_of_shards" : "1",
@@ -305,6 +306,63 @@
               },
               "type" : {
                 "type" : "keyword"
+              }
+            }
+          }
+        }
+      },
+      "summary": {
+        "type": "nested",
+        "properties": {
+          "data_category": {
+            "type": "nested",
+            "properties": {
+              "key": {
+                "type": "keyword"
+              },
+              "donors": {
+                "type": "integer"
+              },
+              "files": {
+                "type": "integer"
+              }
+            }
+          },
+          "experimental_strategy": {
+            "type": "nested",
+            "properties": {
+              "key": {
+                "type": "keyword"
+              },
+              "donors": {
+                "type": "integer"
+              },
+              "files": {
+                "type": "integer"
+              }
+            }
+          },
+          "diagnosis": {
+            "type": "nested",
+            "properties": {
+              "donors": {
+                "type": "integer"
+              }
+            }
+          },
+          "phenotype": {
+            "type": "nested",
+            "properties": {
+              "donors": {
+                "type": "integer"
+              }
+            }
+          },
+          "treatment": {
+            "type": "nested",
+            "properties": {
+              "donors": {
+                "type": "integer"
               }
             }
           }
