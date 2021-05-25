@@ -1,4 +1,5 @@
 {
+  "index_patterns": ["st*_files-**"],
   "settings" : {
     "index" : {
       "number_of_shards" : "1",
