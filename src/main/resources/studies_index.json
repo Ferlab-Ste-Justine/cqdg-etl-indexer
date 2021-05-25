@@ -1,4 +1,5 @@
 {
+  "index_patterns": ["st*_studies-*"],
   "settings" : {
     "index" : {
       "number_of_shards" : "1",
