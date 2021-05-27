@@ -153,28 +153,34 @@
           "phenotypes" : {
             "type": "nested",
             "properties" : {
-              "hpo_category_keyword" : {
+              "phenotype_id" : {
                 "type" : "keyword"
               },
-              "hpo_category" : {
+              "name" : {
                 "type" : "text",
                 "analyzer": "english",
                 "search_analyzer": "cqdg_analyzer_en",
                 "term_vector": "with_positions_offsets",
                 "store": true
               },
-              "hpo_code" : {
-                "type" : "keyword"
-              },
-              "hpo_term_keyword" : {
-                "type" : "keyword"
-              },
-              "hpo_term" : {
+              "parents" : {
                 "type" : "text",
                 "analyzer": "english",
                 "search_analyzer": "cqdg_analyzer_en",
                 "term_vector": "with_positions_offsets",
                 "store": true
+              },
+              "age_at_phenotype" : {
+                "type" : "integer"
+              },
+              "phenotype_observed_bool" : {
+                "type" : "boolean"
+              },
+              "is_leaf" : {
+                "type" : "boolean"
+              },
+              "is_tagged" : {
+                "type" : "boolean"
               }
             }
           },
