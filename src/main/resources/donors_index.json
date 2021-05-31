@@ -98,60 +98,47 @@
       "vital_status" : {
         "type" : "keyword"
       },
-      "diagnoses" : {
+      "diagnoses": {
         "type": "nested",
-        "properties" : {
-          "icd_category_keyword" : {
+        "properties": {
+          "submitter_diagnosis_id": {
             "type": "keyword"
           },
-          "icd_category" : {
-            "type" : "text",
-            "analyzer": "english",
-            "search_analyzer": "cqdg_analyzer_en",
-            "term_vector": "with_positions_offsets",
-            "store": true
-          },
-          "mondo_term_keyword" : {
+          "diagnosis_type": {
             "type": "keyword"
           },
-          "mondo_term" : {
-            "type" : "text",
-            "analyzer": "english",
-            "search_analyzer": "cqdg_analyzer_en",
-            "term_vector": "with_positions_offsets",
-            "store": true
+          "age_at_diagnosis": {
+            "type": "integer"
           },
-          "icd_term_keyword" : {
+          "is_self_reported": {
             "type": "keyword"
           },
-          "icd_term" : {
-            "type" : "text",
-            "analyzer": "english",
-            "search_analyzer": "cqdg_analyzer_en",
-            "term_vector": "with_positions_offsets",
-            "store": true
+          "is_cancer": {
+            "type": "boolean"
           },
-          "age_at_diagnosis" : {
-            "type" : "integer"
+          "is_cancer_primary": {
+            "type": "keyword"
           },
-          "treatments" : {
+          "stage_group": {
+            "type": "keyword"
+          },
+          "t_category": {
+            "type": "keyword"
+          },
+          "n_category": {
+            "type": "keyword"
+          },
+          "m_category": {
+            "type": "keyword"
+          },
+          "treatments": {
             "type": "nested",
-            "properties" : {
-              "submitter_treatment_id" : {
-                "type" : "keyword"
-              },
-              "treatment_type" : {
-                "type" : "keyword"
-              },
-              "icd_term_keyword" : {
+            "properties": {
+              "submitter_follow_up_id": {
                 "type": "keyword"
               },
-              "icd_term" : {
-                "type" : "text",
-                "analyzer": "english",
-                "search_analyzer": "cqdg_analyzer_en",
-                "term_vector": "with_positions_offsets",
-                "store": true
+              "treatment_type": {
+                "type": "keyword"
               },
               "treatment_is_primary": {
                 "type": "keyword"
@@ -161,38 +148,20 @@
               },
               "treatment_response": {
                 "type": "keyword"
-              },
-              "medication_name": {
-                "type": "keyword"
-              },
-              "medication_code": {
-                "type": "keyword"
-              },
-              "medication_class": {
-                "type": "keyword"
-              },
-              "medication_start_date": {
-                "type": "keyword"
-              },
-              "medication_end_date": {
-                "type": "keyword"
               }
             }
           },
-          "follow_ups" : {
+          "follow_ups": {
             "type": "nested",
-            "properties" : {
-              "submitter_follow_up_id" : {
-                "type" : "keyword"
+            "properties": {
+              "submitter_treatment_id": {
+                "type": "keyword"
               },
-              "disease_status_at_followup" : {
-                "type" : "keyword"
+              "days_to_follow_up": {
+                "type": "integer"
               },
-              "relapse_interval" : {
-                "type" : "keyword"
-              },
-              "days_to_follow_up" : {
-                "type" : "integer"
+              "disease_status_at_followup": {
+                "type": "keyword"
               }
             }
           }
