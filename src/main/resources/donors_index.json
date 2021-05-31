@@ -291,6 +291,44 @@
           }
         }
       },
+      "summary": {
+        "type": "nested",
+        "properties": {
+          "data_category": {
+            "type": "nested",
+            "properties": {
+              "key": {
+                "type": "keyword"
+              },
+              "files": {
+                "type": "integer"
+              }
+            }
+          },
+          "experimental_strategy": {
+            "type": "nested",
+            "properties": {
+              "key": {
+                "type": "keyword"
+              },
+              "files": {
+                "type": "integer"
+              }
+            }
+          },
+          "clinical_data_available": {
+            "type": "nested",
+            "properties": {
+              "key": {
+                "type": "keyword"
+              },
+              "available": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
       "phenotypes" : {
         "type": "nested",
         "properties" : {

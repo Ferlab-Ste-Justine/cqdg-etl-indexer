@@ -348,25 +348,12 @@
               }
             }
           },
-          "diagnosis": {
+          "clinical_data_available": {
             "type": "nested",
             "properties": {
-              "donors": {
-                "type": "integer"
-              }
-            }
-          },
-          "phenotype": {
-            "type": "nested",
-            "properties": {
-              "donors": {
-                "type": "integer"
-              }
-            }
-          },
-          "treatment": {
-            "type": "nested",
-            "properties": {
+              "key": {
+                "type": "keyword"
+              },
               "donors": {
                 "type": "integer"
               }
