@@ -98,22 +98,8 @@
       "file_format" : {
         "type" : "keyword"
       },
-      "file_id" : {
-        "type" : "keyword"
-      },
-      "file_name" : {
-        "type" : "text"
-      },
       "file_size" : {
         "type" : "float"
-      },
-      "file_name_keyword" : {
-        "type" : "keyword"
-      },
-      "file_name_ngrams" : {
-        "type" : "text",
-        "analyzer": "cqdg_autocomplete_analyzer",
-        "search_analyzer": "cqdg_autocomplete_search_analyzer"
       },
       "is_harmonized" : {
         "type" : "boolean"
@@ -177,12 +163,6 @@
       "study" : {
         "type": "nested",
         "properties" : {
-          "study_id" : {
-            "analyzer": "keyword_analyzer_lowercase",
-            "search_analyzer": "keyword_search_analyzer_lowercase",
-            "type" : "text",
-            "store": true
-          },
           "internal_study_id" : {
             "type" : "keyword"
           },
@@ -196,20 +176,8 @@
             "type" : "text",
             "store": true
           },
-          "short_name" : {
-            "type" : "text",
-            "analyzer": "english",
-            "search_analyzer": "cqdg_analyzer_en",
-            "term_vector": "with_positions_offsets",
-            "store": true
-          },
           "short_name_keyword" : {
             "type" : "keyword"
-          },
-          "short_name_ngrams": {
-            "type" : "text",
-            "analyzer": "cqdg_autocomplete_analyzer",
-            "search_analyzer": "cqdg_autocomplete_search_analyzer"
           },
           "population" : {
             "type" : "keyword"
@@ -365,6 +333,32 @@
           "m_category": {
             "type": "keyword"
           },
+          "tagged_mondo": {
+            "type": "nested",
+            "properties": {
+              "phenotype_id": {
+                "type": "keyword"
+              },
+              "name": {
+                "type": "keyword"
+              },
+              "parents": {
+                "type": "text"
+              },
+              "is_leaf": {
+                "type": "boolean"
+              },
+              "is_tagged": {
+                "type": "boolean"
+              },
+              "internal_phenotype_id": {
+                "type": "keyword"
+              },
+              "age_at_event": {
+                "type": "integer"
+              }
+            }
+          },
           "treatments": {
             "type": "nested",
             "properties": {
@@ -407,40 +401,55 @@
           }
         }
       },
-      "phenotypes" : {
+      "observed_phenotype_tagged": {
         "type": "nested",
-        "properties" : {
-          "phenotype_id" : {
-            "type" : "keyword"
+        "properties": {
+          "phenotype_id": {
+            "type": "keyword"
           },
-          "internal_phenotype_id" : {
-            "type" : "keyword"
+          "name": {
+            "type": "keyword"
           },
-          "name" : {
-            "type" : "text",
-            "analyzer": "english",
-            "search_analyzer": "cqdg_analyzer_en",
-            "term_vector": "with_positions_offsets",
-            "store": true
+          "parents": {
+            "type": "text"
           },
-          "parents" : {
-            "type" : "text",
-            "analyzer": "english",
-            "search_analyzer": "cqdg_analyzer_en",
-            "term_vector": "with_positions_offsets",
-            "store": true
+          "is_leaf": {
+            "type": "boolean"
           },
-          "age_at_phenotype" : {
-            "type" : "integer"
+          "is_tagged": {
+            "type": "boolean"
           },
-          "phenotype_observed_bool" : {
-            "type" : "boolean"
+          "internal_phenotype_id": {
+            "type": "keyword"
           },
-          "is_leaf" : {
-            "type" : "boolean"
+          "age_at_event": {
+            "type": "integer"
+          }
+        }
+      },
+      "not_observed_phenotype_tagged": {
+        "type": "nested",
+        "properties": {
+          "phenotype_id": {
+            "type": "keyword"
           },
-          "is_tagged" : {
-            "type" : "boolean"
+          "name": {
+            "type": "keyword"
+          },
+          "parents": {
+            "type": "text"
+          },
+          "is_leaf": {
+            "type": "boolean"
+          },
+          "is_tagged": {
+            "type": "boolean"
+          },
+          "internal_phenotype_id": {
+            "type": "keyword"
+          },
+          "age_at_event": {
+            "type": "integer"
           }
         }
       },
