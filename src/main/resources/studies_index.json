@@ -90,8 +90,7 @@
         "type" : "keyword"
       },
       "name" : {
-        "type" : "text",
-        "store": true
+        "type": "keyword"
       },
       "short_name_keyword" : {
         "type" : "keyword"
@@ -186,7 +185,7 @@
                     "type": "keyword"
                   },
                   "parents": {
-                    "type": "text"
+                    "type": "keyword"
                   },
                   "is_leaf": {
                     "type": "boolean"
@@ -254,7 +253,7 @@
                 "type": "keyword"
               },
               "parents": {
-                "type": "text"
+                "type": "keyword"
               },
               "is_leaf": {
                 "type": "boolean"
@@ -280,7 +279,7 @@
                 "type": "keyword"
               },
               "parents": {
-                "type": "text"
+                "type": "keyword"
               },
               "is_leaf": {
                 "type": "boolean"
@@ -350,11 +349,7 @@
                 "type": "keyword"
               },
               "icd_term" : {
-                "type" : "text",
-                "analyzer": "english",
-                "search_analyzer": "cqdg_analyzer_en",
-                "term_vector": "with_positions_offsets",
-                "store": true
+                "type": "keyword"
               },
               "is_cancer" : {
                 "type" : "boolean"
