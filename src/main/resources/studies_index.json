@@ -178,7 +178,6 @@
                 "type": "keyword"
               },
               "tagged_mondo": {
-                "type": "nested",
                 "properties": {
                   "phenotype_id": {
                     "type": "keyword"
