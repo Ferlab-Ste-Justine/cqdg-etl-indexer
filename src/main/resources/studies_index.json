@@ -387,7 +387,6 @@
         }
       },
       "summary": {
-        "type": "nested",
         "properties": {
           "data_category": {
             "type": "nested",
