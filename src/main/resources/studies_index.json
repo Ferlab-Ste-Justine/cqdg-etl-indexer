@@ -425,7 +425,6 @@
         }
       },
       "data_access_codes": {
-        "type": "nested",
         "properties": {
           "access_limitations": {
             "type": "keyword"
