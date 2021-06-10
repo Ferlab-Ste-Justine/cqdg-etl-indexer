@@ -187,6 +187,37 @@
                   "parents": {
                     "type": "keyword"
                   },
+                  "main_category": {
+                    "type": "keyword"
+                  },
+                  "is_leaf": {
+                    "type": "boolean"
+                  },
+                  "is_tagged": {
+                    "type": "boolean"
+                  },
+                  "internal_phenotype_id": {
+                    "type": "keyword"
+                  },
+                  "age_at_event": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "tagged_icd": {
+                "properties": {
+                  "phenotype_id": {
+                    "type": "keyword"
+                  },
+                  "name": {
+                    "type": "keyword"
+                  },
+                  "parents": {
+                    "type": "keyword"
+                  },
+                  "main_category": {
+                    "type": "keyword"
+                  },
                   "is_leaf": {
                     "type": "boolean"
                   },
@@ -243,6 +274,35 @@
               }
             }
           },
+          "icd": {
+            "type": "nested",
+            "properties": {
+              "phenotype_id": {
+                "type": "keyword"
+              },
+              "name": {
+                "type": "keyword"
+              },
+              "parents": {
+                "type": "keyword"
+              },
+              "main_category": {
+                "type": "keyword"
+              },
+              "is_leaf": {
+                "type": "boolean"
+              },
+              "is_tagged": {
+                "type": "boolean"
+              },
+              "internal_phenotype_id": {
+                "type": "keyword"
+              },
+              "age_at_event": {
+                "type": "integer"
+              }
+            }
+          },
           "observed_phenotype_tagged": {
             "type": "nested",
             "properties": {
@@ -253,6 +313,9 @@
                 "type": "keyword"
               },
               "parents": {
+                "type": "keyword"
+              },
+              "main_category": {
                 "type": "keyword"
               },
               "is_leaf": {
@@ -279,6 +342,9 @@
                 "type": "keyword"
               },
               "parents": {
+                "type": "keyword"
+              },
+              "main_category": {
                 "type": "keyword"
               },
               "is_leaf": {
