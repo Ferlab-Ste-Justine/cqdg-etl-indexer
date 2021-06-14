@@ -452,6 +452,14 @@
                 "type": "boolean"
               }
             }
+          },
+          "clinical_data_available_only": {
+            "type": "nested",
+            "properties": {
+              "key": {
+                "type": "keyword"
+              }
+            }
           }
         }
       },
