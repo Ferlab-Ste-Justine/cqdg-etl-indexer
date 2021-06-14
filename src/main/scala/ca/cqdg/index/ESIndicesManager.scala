@@ -118,10 +118,10 @@ object ESIndicesManager {
     executeHttpRequest(http, indexDeletionRequest, false)
   }
 
-  def executeHttpRequest(http:HttpClient, request: HttpRequestBase, throwException: Boolean):Unit = {
+  def executeHttpRequest(http:HttpClient, request: HttpRequestBase, throwException: Boolean, withResponse: Boolean = false): Option[String] = {
     val res:HttpResponse = http.execute(request)
     val statusCode:Int = res.getStatusLine.getStatusCode
-
+    var responseBody: Option[String] = None
     try{
       if(200 != statusCode && 404 != statusCode){
         logger.error(EntityUtils.toString(res.getEntity, "UTF-8"))
@@ -130,8 +130,13 @@ object ESIndicesManager {
         }
       }
     }finally {
-      EntityUtils.consumeQuietly(res.getEntity)
+      if(withResponse) {
+        responseBody = Some(EntityUtils.toString(res.getEntity, "UTF-8"))
+      }else {
+        EntityUtils.consumeQuietly(res.getEntity)
+      }
     }
+    responseBody
   }
 
   trait Action{}
