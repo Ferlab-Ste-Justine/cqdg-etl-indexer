@@ -62,13 +62,22 @@ object ESIndicesManager {
     }
   }
 
+  // this part of the mapping is only used with V2 Indexer, need to be removed for V1
+  def removeIndexV2(config:String):String = {
+    def removeIndexByName(config:String, name:String): String = {
+      config.replace("\"index_patterns\": [\"st*_"+name+"-*\"],", "")
+    }
+    removeIndexByName(removeIndexByName(removeIndexByName(config, "studies"), "donors"), "files")
+  }
+
   def createIndex(http:HttpClient, indexConfig:String, indexUrl:String): Unit ={
     val configSource:Source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(indexConfig), "UTF-8")
-    val config:String = try configSource.getLines().mkString finally configSource.close()
+    val configV2:String = try configSource.getLines().mkString finally configSource.close()
+    val configV1 = removeIndexV2(configV2)
 
     val indexCreationRequest = new HttpPut(indexUrl)
 
-    val body: StringEntity = new StringEntity(config)
+    val body: StringEntity = new StringEntity(configV1)
     body.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
 
     indexCreationRequest.setEntity(body)
