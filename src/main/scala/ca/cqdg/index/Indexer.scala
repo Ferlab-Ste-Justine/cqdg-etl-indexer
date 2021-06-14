@@ -43,10 +43,7 @@ object Indexer extends App {
   val (esHost: String, username:Option[String], password:Option[String]) = args match {
     case Array(esHost) => (esHost, None, None)
     case Array(esHost, username, password) => (esHost, Some(username), Some(password))
-    case _ => {
-      LOGGER.error("Usage: GenomicDataImporter task_name [batch_id]")
-      System.exit(-1)
-    }
+    case _ => ("http://localhost:9200/", None, None)
   }
 
   implicit val spark: SparkSession = if(username.isDefined && password.isDefined)
