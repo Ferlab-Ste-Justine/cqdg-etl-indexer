@@ -72,12 +72,15 @@ object CreateArraysApp extends App {
   }
 
   def createArraysRequest(http: HttpClient, projectUrl: URL, compatibleFields: List[String], indexName: String) = {
+    val escapeCompatibleFields = compatibleFields.map(str => "\""+str+"\"").mkString(",")
+    val arraysQuerySource = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("arrays/arrays_query.json"))
+    val arraysQuery = try arraysQuerySource.getLines().mkString finally arraysQuerySource.close()
+
     val requestUrl = new URL(projectUrl, s"arranger-projects-cqdg/_update/$indexName").toString
     val request = new HttpPost(requestUrl)
-    val escapeCompatibleFields = compatibleFields.map(str => "\""+str+"\"").mkString(",")
-    val scriptBody = "{\"script\": { \"lang\": \"painless\", \"source\": \"def targets = ctx._source.config.extended.findAll(el -> params.fields.contains(el.field) ); for(el in targets) { el.isArray = true }\", \"params\": { \"fields\": ["+escapeCompatibleFields+"]}}}"
-    request.setEntity(new StringEntity(scriptBody))
+    request.setEntity(new StringEntity(arraysQuery.replace("{{compatibleFields}}", escapeCompatibleFields)))
     request.setHeader("Content-Type", "application/json")
+
     val response = executeHttpRequest(http, request, true, true).get
     log.info(response)
   }
@@ -99,7 +102,7 @@ object CreateArraysApp extends App {
   val http = httpBuilder.build()
   val projectUrl = new URL(esHost)
 
-  val config = extractArrayFieldFromConfiguration("arrays.txt")
+  val config = extractArrayFieldFromConfiguration("arrays/arrays.txt")
   val projectFields = extractArrayFieldsFromProject(http, projectUrl)
 
   val compatibleFields = projectFields.intersect(config).toList
