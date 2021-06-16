@@ -1,0 +1,11 @@
+data_access_codes.access_requirements
+study.data_access_codes.access_requirements
+donors.diagnoses.tagged_mondo.parents
+diagnoses.tagged_mondo.parents
+diagnoses.tagged_icd.parents
+observed_phenotypes.parents
+non_observed_phenotypes.parents
+observed_phenotype_tagged.parents
+not_observed_phenotype_tagged.parents
+icd.parents
+mondo.parents

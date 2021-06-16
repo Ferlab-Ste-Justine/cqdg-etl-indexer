@@ -1,0 +1,11 @@
+{
+  "script": {
+    "lang": "painless",
+    "source": "def targets = ctx._source.config.extended.findAll(el -> params.fields.contains(el.field) ); for(el in targets) { el.isArray = true }",
+    "params": {
+      "fields": [
+        {{compatibleFields}}
+      ]
+    }
+  }
+}
