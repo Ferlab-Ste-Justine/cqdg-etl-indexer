@@ -14,7 +14,9 @@ import org.spark_project.guava.io.BaseEncoding
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import scala.annotation.tailrec
+import scala.collection.immutable.TreeMap
 import scala.io.Source
+import scala.util.{Failure, Success, Try}
 
 object CreateArraysApp extends App {
 
@@ -27,51 +29,55 @@ object CreateArraysApp extends App {
 
   val log: Logger = LoggerFactory.getLogger(CreateArraysApp.getClass)
 
-  val (esHost: String, username:Option[String], password:Option[String]) = args match {
+  val (esHost: String, username: Option[String], password: Option[String]) = args match {
     case Array(esHost) => (esHost, None, None)
     case Array(esHost, username, password) => (esHost, Some(username), Some(password))
     case _ => ("http://localhost:9200/", None, None)
   }
 
-  def extractArrayFieldFromConfiguration(configFile: String) = {
+  def extractArrayFieldFromConfiguration(configFile: String): Set[String] = {
     val arraysConfig = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(configFile))
-    val arrays = try arraysConfig.getLines().toList finally arraysConfig.close()
-    Set(arrays:_*)
+    val arrays = arraysConfig.getLines().toSet
+    arraysConfig.close()
+    arrays
   }
 
   // extract every field line from the ES project, ex: "field" : "access_requirements",
   def extractArrayFieldsFromProject(http: HttpClient, projectUrl: URL): Set[String] = {
     val requestUrl = new URL(projectUrl, "arranger-projects-cqdg/_search").toString
     val httpRequest = new HttpGet(requestUrl)
-    val project = executeHttpRequest(http, httpRequest, true, true).get
+    val response = executeHttpRequest(http, httpRequest, true, true)
 
     // good old ugly string delimiter finder
-    def extractNextFieldAndValue(esProject: String, lastIndex: Int): Option[(String, Int)] = {
-      val fieldStr = "\"field\""; val delimiter = "\""
-      val nextFieldIndex = project.indexOf(fieldStr, lastIndex)
-      if(nextFieldIndex == -1) None
-      else {
-        val nextFieldValueStartIndex = project.indexOf(delimiter, nextFieldIndex + fieldStr.length)
-        val nextFieldValueEndIndex = project.indexOf(delimiter, nextFieldValueStartIndex + delimiter.length)
-        val fieldValue = project.substring(nextFieldValueStartIndex + delimiter.length, nextFieldValueEndIndex)
-        Some((fieldValue, nextFieldValueEndIndex))
-      }
+    def extractNextFieldAndValue(response: Option[String], lastIndex: Int): Option[(String, Int)] = {
+      val fieldStr = "\"field\"";
+      val delimiter = "\""
+      response.flatMap(project => {
+        val nextFieldIndex = project.indexOf(fieldStr, lastIndex)
+        if(nextFieldIndex == -1) None
+        else {
+          val nextFieldValueStartIndex = project.indexOf(delimiter, nextFieldIndex + fieldStr.length)
+          val nextFieldValueEndIndex = project.indexOf(delimiter, nextFieldValueStartIndex + delimiter.length)
+          val fieldValue = project.substring(nextFieldValueStartIndex + delimiter.length, nextFieldValueEndIndex)
+          Some((fieldValue, nextFieldValueEndIndex))
+        }
+      })
     }
 
     @tailrec
-    def findALlFields(project:String, lastIndex: Int, found: List[String]): List[String] = {
-      val nextField: Option[(String, Int)] = extractNextFieldAndValue(project, lastIndex)
+    def findALlFields(response: Option[String], lastIndex: Int, found: List[String]): List[String] = {
+      val nextField: Option[(String, Int)] = extractNextFieldAndValue(response, lastIndex)
       if(nextField.isEmpty){
         found
       } else {
-        findALlFields(project, nextField.get._2, nextField.get._1 :: found)
+        findALlFields(response, nextField.get._2, nextField.get._1 :: found)
       }
     }
 
-    Set(findALlFields(project, 0, List()):_*)
+    Set(findALlFields(response, 0, List()):_*)
   }
 
-  def createArraysRequest(http: HttpClient, projectUrl: URL, compatibleFields: List[String], indexName: String) = {
+  def createArraysRequest(http: HttpClient, projectUrl: URL, compatibleFields: List[String], indexName: String): Unit = {
     val escapeCompatibleFields = compatibleFields.map(str => "\""+str+"\"").mkString(",")
     val arraysQuerySource = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("arrays/arrays_query.json"))
     val arraysQuery = try arraysQuerySource.getLines().mkString finally arraysQuerySource.close()

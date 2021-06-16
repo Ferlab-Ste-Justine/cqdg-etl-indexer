@@ -132,9 +132,8 @@ object ESIndicesManager {
     }finally {
       if(withResponse) {
         responseBody = Some(EntityUtils.toString(res.getEntity, "UTF-8"))
-      }else {
-        EntityUtils.consumeQuietly(res.getEntity)
       }
+      EntityUtils.consumeQuietly(res.getEntity)
     }
     responseBody
   }
