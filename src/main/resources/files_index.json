@@ -342,6 +342,9 @@
               "main_category": {
                 "type": "keyword"
               },
+              "display_name": {
+                "type": "keyword"
+              },
               "is_leaf": {
                 "type": "boolean"
               },
@@ -368,6 +371,9 @@
                 "type": "keyword"
               },
               "main_category": {
+                "type": "keyword"
+              },
+              "display_name": {
                 "type": "keyword"
               },
               "is_leaf": {
@@ -441,6 +447,9 @@
           "main_category": {
             "type": "keyword"
           },
+          "display_name": {
+            "type": "keyword"
+          },
           "is_leaf": {
             "type": "boolean"
           },
@@ -470,6 +479,9 @@
           "main_category": {
             "type": "keyword"
           },
+          "display_name": {
+            "type": "keyword"
+          },
           "is_leaf": {
             "type": "boolean"
           },
@@ -497,6 +509,9 @@
             "type": "keyword"
           },
           "main_category": {
+            "type": "keyword"
+          },
+          "display_name": {
             "type": "keyword"
           },
           "is_leaf": {
